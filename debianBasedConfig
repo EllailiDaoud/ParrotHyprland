@@ -1,0 +1,267 @@
+─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $ls /etc/apt/apt.conf.d
+01autoremove  02autoremove-postgresql  20listchanges  70debconf  99parrot-menu  99retry-on-error
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $ls /etc/apt/sources.list
+/etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $vi /etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo !!
+sudo vi /etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt install hyprland
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package hyprland
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt install hyprland
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package hyprland
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt install hyprland -t sid
+Reading package lists... Done
+E: The value 'sid' is invalid for APT::Default-Release as such a release is not available in the sources
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list.d/sid.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt update
+Hit:1 http://deb.debian.org/debian sid InRelease
+Get:2 http://deb.debian.org/debian sid/main amd64 DEP-11 Metadata [5,220 kB]      
+Ign:3 http://ftp.us.debian.org/debian Sid InRelease                                        
+Err:4 http://ftp.us.debian.org/debian Sid Release                                          
+  404  Not Found [IP: 64.50.236.52 80]
+Hit:5 https://deb.parrot.sh/parrot lory InRelease                                         
+Hit:6 https://deb.parrot.sh/direct/parrot lory-security InRelease                       
+Hit:7 https://deb.parrot.sh/parrot lory-backports InRelease      
+Get:8 http://deb.debian.org/debian sid/contrib amd64 DEP-11 Metadata [39.9 kB]
+Get:9 http://deb.debian.org/debian sid/non-free amd64 DEP-11 Metadata [5,256 B]
+Get:10 http://deb.debian.org/debian sid/non-free-firmware amd64 DEP-11 Metadata [23.4 kB]
+Reading package lists... Done                                               
+E: The repository 'http://ftp.us.debian.org/debian Sid Release' does not have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list.d/sid.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list.d/sid.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo /etc/apt/sources.list
+sudo: /etc/apt/sources.list: command not found
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $history
+    1  # Go to home directory
+    2  cd ~
+    3  # Download CMake 3.30.4
+    4  wget https://github.com/Kitware/CMake/releases/download/v3.30.4/cmake-3.30.4.tar.gz
+    5  # Extract it
+    6  tar -zxvf cmake-3.30.4.tar.gz
+    7  # Enter the directory
+    8  cd cmake-3.30.4
+    9  # Bootstrap CMake (prepare the build files)
+   10  ./bootstrap
+   11  # Compile CMake (this will take 5–10 minutes depending on your CPU)
+   12  make -j$(nproc)
+   13  # Install CMake system-wide
+   14  sudo make install
+   15  cmake --version
+   16  cd ~
+   17  git clone --recursive https://github.com/hyprwm/Hyprland.git
+   18  ls
+   19  cd Hyprland/
+   20  make all 
+   21  sudo apt install libdisplay-info-dev
+   22  cd ~/Hyprland
+   23  make clear
+   24  make all
+   25  sudo apt install libdisplay-info-dev
+   26  make clear 
+   27  make all
+   28  git pull
+   29  git submodule update --init --recursive
+   30  make clear
+   31  make all
+   32  cd ~
+   33  rm -rf Hyprland
+   34  git clone --recursive https://github.com/hyprwm/Hyprland.git
+   35  cd Hyprland
+   36  make all
+   37  ls
+   38  git clone --recursive https://github.com/hyprwm/xdg-desktop-portal-hyprland
+   39  cd xdg-desktop-portal-hyprland/
+   40  cmake -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib -DCMAKE_INSTALL_PREFIX=/usr -B build
+   41  sudo aptitude instll Qt6Config.cmake qt6-config.cmake
+   42  sudo aptitude install Qt6Config.cmake qt6-config.cmake
+   43  sudo aptitude install cmake
+   44  dpkg -l | grep mesa
+   45  git clone --recursive https://github.com/hyprwm/Hyprland
+   46  cd Hyprland/
+   47  make all && sudo make install
+   48  cd ..
+   49  cd Hyprland/
+   50  make all && sudo make install
+   51  cd 
+   52  git clone https://github.com/hyprwm/aquamarine.git
+   53  cd Hyprland/
+   54  cd
+   55  cd aquamarine/
+   56  cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+   57  git clone https://github.com/hyprwm/hyprlang.git
+   58  cd
+   59  git clone https://github.com/hyprwm/hyprlang.git
+   60  cd hyprlang/
+   61  cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+   62  cd 
+   63  git clone https://github.com/hyprwm/hyprutils.git
+   64  cd hyprutils/
+   65  cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+   66  cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESS
+ORS_CONF`
+   67  sudo cmake --install build
+   68  cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+   69  cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+   70  sudo apt install libfmt-dev
+   71  cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+   72  gcc -v --help 2> /dev/null | sed -n '/^ -std=([^<][^ ]+)./ {s//\1/p}'
+   73  cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+   74  $(gcc -print-prog-name=cc1) --help | grep std
+   75  cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+   76  sudo apt install hyprland
+   77  sudo aptitude install hyprland
+   78  ls etc/apt/apt.conf.d
+   79  ls etc/apt/
+   80  ls etc/
+   81  ls /etc/
+   82  ls /etc/apt/apt.conf.d
+   83  ls /etc/apt/sources.list
+   84  vi /etc/apt/sources.list
+   85  sudo vi /etc/apt/sources.list
+   86  sudo apt install hyprland
+   87  sudo vi /etc/apt/sources.list
+   88  sudo apt install hyprland
+   89  sudo apt install hyprland -t sid
+   90  sudo vi /etc/apt/sources.list.d/sid.list
+   91  sudo apt update
+   92  sudo vi /etc/apt/sources.list.d/sid.list
+   93* sudo /etc/apt/sources.list
+   94  history
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list.d/sid.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list.d/
+parrot.list  sid.list     
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list
+sources.list      sources.list.d/   sources.list.old  
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt update
+Hit:1 http://deb.debian.org/debian sid InRelease
+Hit:2 https://deb.parrot.sh/parrot lory InRelease
+Hit:3 https://deb.parrot.sh/direct/parrot lory-security InRelease
+Hit:4 https://deb.parrot.sh/parrot lory-backports InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+210 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: Target Packages (main/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (main/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (main/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (contrib/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (contrib/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (contrib/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target
+rces.list.d/sid.list:1
+W: Targe
+t DEP-11 (contrib/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free-firmware/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free-firmware/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free-firmware/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free-firmware/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (main/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (main/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (main/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (contrib/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (contrib/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (contrib/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (contrib/dep11/Components-amd64.y
+ml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (contrib/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-i386/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Packages (non-free-firmware/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free-firmware/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target Translations (non-free-firmware/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free-firmware/dep11/Components-amd64.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+W: Target DEP-11 (non-free-firmware/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list:17 and /etc/apt/sources.list.d/sid.list:1
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo vi /etc/apt/sources.list
+┌─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt install hyprland
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ hyprland : Depends: libc6 (>= 2.38) but 2.36-9+deb12u10 is to be installed
+            Depends: libglib2.0-0t64 (>= 2.12.0) but it is not going to be installed
+            Depends: libhyprcursor0 (>= 0.1.9) but it is not going to be installed
+            Depends: libhyprlang2 (>= 0.5.2) but it is not going to be installed
+            Depends: libhyprutils0 (>= 0.1.5) but it is not going to be installed
+            Depends: libinput10 (>= 1.26.0) but 1.22.1-1 is to be installed
+            Depends: libliftoff0 (>= 0.4.1) but 0.3.0-1 is to be installed
+            Depends: libstdc++6 (>= 14) but 12.2.0-14 is to be installed
+            Depends: libxcb-icccm4 (>= 0.4.2) but 0.4.1-1.1 is to be installed
+            Recommends: xwayland but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+┌─[✗]─[hyprtest@parrot]─[~/hyprutils]
+└──╼ $sudo apt -t unstable install -f hyprland
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  bamfdaemon
+caja-common ffmpegthumbnailer gcc-12-base:i386 geoclue-2.0 gir1.2-bamf-3 gir1.2-matedesktop-2.0 gir1.2-matepanelapplet-4.0 gir1.2-nm-1.0 gir1.2-wnck-3.0 girepository-tools
+  gtk2-engines-murrine gvfs-fuse icu-devtools iio-sensor-proxy kactivities-bin kded5 kpackagetool5 kwayland-data libbamf3-2 libblkid-dev libboost-dev libboost-locale1.74.0
+  libboost-python1.74.0 libboost-regex1.74.0 libboost1.74-dev libbrotli-dev libbz2-dev libdatrie-dev libdebuginfod-common libfcgi-bin libfcgi0ldbl libffmpegthumbnailer4v5 libfontconfig-dev
