@@ -1,0 +1,2001 @@
+
+
+Vous avez dit :
+[dx$@parrot]─[~]
+└──╼ $Hyprland 
+Welcome to Hyprland!
+[LOG] Instance Signature: 918d8340afd652b011b937d29d5eea0be08467f5_1744742416_625275080
+[LOG] Runtime directory: /run/user/1000/hypr/918d8340afd652b011b937d29d5eea0be08467f5_1744742416_625275080
+[LOG] Hyprland PID: 1785
+[LOG] ===== SYSTEM INFO: =====
+[LOG] System name: Linux
+[LOG] Node name: parrot
+[LOG] Release: 6.11+parrot-amd64
+[LOG] Version: #1 SMP PREEMPT_DYNAMIC Debian 6.11.5-1parrot1 (2024-12-13)
+
+
+[LOG] GPU information:
+00:02.0 VGA compatible controller [0300]: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630] [8086:3e9b] (rev 02) (prog-if 00 [VGA controller])
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU117GLM [Quadro T2000 Mobile / Max-Q] [10de:1fb8] (rev a1) (prog-if 00 [VGA controller])
+
+
+[WARN] Warning: you're using an NVIDIA GPU. Make sure you follow the instructions on the wiki if anything is amiss.
+
+[LOG] os-release:
+PRETTY_NAME="Parrot Security 6.3 (lorikeet)"
+NAME="Parrot Security"
+VERSION_ID="6.3"
+VERSION="6.3 (lorikeet)"
+VERSION_CODENAME=lory
+ID=debian
+HOME_URL="https://www.parrotsec.org/"
+SUPPORT_URL="https://www.parrotsec.org/community/"
+BUG_REPORT_URL="https://gitlab.com/parrotsec/"
+
+[LOG] ========================
+
+
+
+[INFO] If you are crashing, or encounter any bugs, please consult https://wiki.hyprland.org/Crashes-and-Bugs/
+
+
+[LOG] 
+Current splash: I see a red door and I want it painted black.
+
+
+[LOG] Old rlimit: soft -> 1024, hard -> 1073741816
+[LOG] New rlimit: soft -> 1073741816, hard -> 1073741816
+[LOG] Creating the EventLoopManager!
+[LOG] Creating the HookSystem!
+[LOG] Creating the KeybindManager!
+[LOG] Creating the AnimationManager!
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 22.95µs. Estimated average calc time: 0.00µs.
+[LOG] Creating the ConfigManager!
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 11.82µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[INFO] !!!!HEY YOU, YES YOU!!!!: further logs to stdout / logfile are disabled by default. BEFORE SENDING THIS LOG, ENABLE THEM. Use debug:disable_logs = false to do so: https://wiki.hyprland.org/Configuring/Variables/#debug
+[LOG] Creating the CHyprError!
+[LOG] Creating the LayoutManager!
+[LOG] Creating the TokenManager!
+[LOG] [hookSystem] New hook event registered: preConfigReload
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 9.82µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 9.92µs. Estimated average calc time: 0.00µs.
+Hyprland has crashed :( Consult the crash report at /home/dx$/.cache/hyprland/hyprlandCrashReport1785.txt for more information.
+Aborted
+
+
+ChatGPT a dit :
+Hyprland is crashing right after loading the config file, which suggests there’s likely a problem in your configuration or compatibility issue, especially considering you’re on Parrot OS with NVIDIA GPU (which can be tricky with Wayland compositors like Hyprland).
+
+✅ Let's fix it step by step:
+🔍 Step 1: Check the crash log
+Run:
+
+bash
+Copier
+Modifier
+cat ~/.cache/hyprland/hyprlandCrashReport1785.txt
+Paste the relevant part here, especially lines mentioning segmentation faults or specific modules—it'll help pinpoint the issue.
+
+🔧 Step 2: Enable debug logs
+To get more info, edit your config:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/hyprland.conf
+Add this line at the top (or set it to false if already there):
+
+ini
+Copier
+Modifier
+debug:disable_logs = false
+Then save and run Hyprland again to get detailed logs.
+
+⚙️ Step 3: NVIDIA compatibility (important)
+NVIDIA requires some tweaks to work correctly with Wayland:
+
+Make sure you installed Hyprland with NVIDIA support:
+
+bash
+Copier
+Modifier
+sudo apt install libegl1 libgles2 nvidia-driver
+In your kernel boot parameters (/etc/default/grub), add:
+
+bash
+Copier
+Modifier
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"
+Then:
+
+bash
+Copier
+Modifier
+sudo update-grub
+Check if DRM is enabled:
+
+bash
+Copier
+Modifier
+cat /sys/module/nvidia_drm/parameters/modeset
+It should return Y. If not, load it manually:
+
+bash
+Copier
+Modifier
+sudo modprobe nvidia-drm
+echo 1 | sudo tee /sys/module/nvidia_drm/parameters/modeset
+🧪 Step 4: Run in a clean config
+Sometimes Hyprland crashes due to user config errors.
+
+Try running with the default config:
+
+bash
+Copier
+Modifier
+HYPRLAND_CONFIG_DIR=/etc/hypr Hyprland
+Or rename your config temporarily:
+
+bash
+Copier
+Modifier
+mv ~/.config/hypr ~/.config/hypr.bak
+Hyprland
+If you can share the crash report or tell me what plugins/extensions you're using, I’ll help you patch it quickly.
+
+Would you like me to generate a minimal working hyprland.conf to test?
+
+Vous avez dit :
+`cat ~/.cache/hyprland/hyprlandCrashReport1785.txt`
+
+┌─[dx$@parrot]─[~]
+└──╼ $cat ~/.cache/hyprland/hyprlandCrashReport1785.txt
+--------------------------------------------
+   Hyprland Crash Report
+--------------------------------------------
+Vaxry is going to be upset.
+
+Hyprland received signal 11(SEGV)
+Version: 918d8340afd652b011b937d29d5eea0be08467f5
+Tag: v0.41.2
+
+System info:
+	System name: Linux
+	Node name: parrot
+	Release: 6.11+parrot-amd64
+	Version: #1 SMP PREEMPT_DYNAMIC Debian 6.11.5-1parrot1 (2024-12-13)
+
+GPU:
+	00:02.0 VGA compatible controller [0300]: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630] [8086:3e9b] (rev 02) (prog-if 00 [VGA controller])
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU117GLM [Quadro T2000 Mobile / Max-Q] [10de:1fb8] (rev a1) (prog-if 00 [VGA controller])
+
+
+os-release:
+	PRETTY_NAME="Parrot Security 6.3 (lorikeet)"
+	NAME="Parrot Security"
+	VERSION_ID="6.3"
+	VERSION="6.3 (lorikeet)"
+	VERSION_CODENAME=lory
+	ID=debian
+	HOME_URL="https://www.parrotsec.org/"
+	SUPPORT_URL="https://www.parrotsec.org/community/"
+	BUG_REPORT_URL="https://gitlab.com/parrotsec/"
+Backtrace:
+	# | Hyprland(_Z12getBacktracev+0x5f) [0x564da53f67ef]
+		getBacktrace()
+		??:?
+	#1 | Hyprland(_ZN13CrashReporter18createAndSaveCrashEi+0x965) [0x564da535e385]
+		CrashReporter::createAndSaveCrash(int)
+		??:?
+	#2 | Hyprland(_Z25handleUnrecoverableSignali+0x60) [0x564da52d22c0]
+		handleUnrecoverableSignal(int)
+		??:?
+	#3 | /lib/x86_64-linux-gnu/libc.so.6(+0x3fdf0) [0x7f3053159df0]
+		??
+		??:0
+	#4 | /usr/lib/x86_64-linux-gnu/gbm/nvidia-drm_gbm.so(+0x154cb) [0x7f30330154cb]
+		??
+		??:0
+	#5 | /usr/lib/x86_64-linux-gnu/gbm/nvidia-drm_gbm.so(+0x15798) [0x7f3033015798]
+		??
+		??:0
+	#6 | /lib/x86_64-linux-gnu/libgbm.so.1(+0x3646) [0x7f305379b646]
+		??
+		??:0
+	#7 | /lib/x86_64-linux-gnu/libgbm.so.1(+0x37c3) [0x7f305379b7c3]
+		??
+		??:0
+	#8 | /lib/x86_64-linux-gnu/libgbm.so.1(gbm_create_device+0x44) [0x7f305379b8b4]
+		??
+		??:0
+	#9 | Hyprland(wlr_gbm_allocator_create+0x80) [0x564da56af9b0]
+		wlr_gbm_allocator_create
+		??:?
+	#1 | Hyprland(allocator_autocreate_with_drm_fd+0x1ba) [0x564da56ae5fa]
+		allocator_autocreate_with_drm_fd
+		??:?
+	#11 | Hyprland(_ZN11CCompositor10initServerEv+0x1a6) [0x564da52e5dd6]
+		CCompositor::initServer()
+		??:?
+	#12 | Hyprland(main+0xa3d) [0x564da529508d]
+		main
+		??:?
+	#13 | /lib/x86_64-linux-gnu/libc.so.6(+0x29ca8) [0x7f3053143ca8]
+		??
+		??:0
+	#14 | /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x85) [0x7f3053143d65]
+		??
+		??:0
+	#15 | Hyprland(_start+0x21) [0x564da52d2111]
+		_start
+		??:?
+
+
+Log tail:
+[LOG] Runtime directory: /run/user/1000/hypr/918d8340afd652b011b937d29d5eea0be08467f5_1744742416_625275080
+[LOG] Hyprland PID: 1785
+[LOG] ===== SYSTEM INFO: =====
+[LOG] System name: Linux
+[LOG] Node name: parrot
+[LOG] Release: 6.11+parrot-amd64
+[LOG] Version: #1 SMP PREEMPT_DYNAMIC Debian 6.11.5-1parrot1 (2024-12-13)
+
+
+[LOG] GPU information:
+00:02.0 VGA compatible controller [0300]: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630] [8086:3e9b] (rev 02) (prog-if 00 [VGA controller])
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU117GLM [Quadro T2000 Mobile / Max-Q] [10de:1fb8] (rev a1) (prog-if 00 [VGA controller])
+
+
+[WARN] Warning: you're using an NVIDIA GPU. Make sure you follow the instructions on the wiki if anything is amiss.
+
+[LOG] os-release:
+PRETTY_NAME="Parrot Security 6.3 (lorikeet)"
+NAME="Parrot Security"
+VERSION_ID="6.3"
+VERSION="6.3 (lorikeet)"
+VERSION_CODENAME=lory
+ID=debian
+HOME_URL="https://www.parrotsec.org/"
+SUPPORT_URL="https://www.parrotsec.org/community/"
+BUG_REPORT_URL="https://gitlab.com/parrotsec/"
+
+[LOG] ========================
+
+
+
+[INFO] If you are crashing, or encounter any bugs, please consult https://wiki.hyprland.org/Crashes-and-Bugs/
+
+
+[LOG] 
+Current splash: I see a red door and I want it painted black.
+
+
+[LOG] Old rlimit: soft -> 1024, hard -> 1073741816
+[LOG] New rlimit: soft -> 1073741816, hard -> 1073741816
+[LOG] Creating the EventLoopManager!
+[LOG] Creating the HookSystem!
+[LOG] Creating the KeybindManager!
+[LOG] Creating the AnimationManager!
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 22.95µs. Estimated average calc time: 0.00µs.
+[LOG] Creating the ConfigManager!
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 11.82µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[INFO] !!!!HEY YOU, YES YOU!!!!: further logs to stdout / logfile are disabled by default. BEFORE SENDING THIS LOG, ENABLE THEM. Use debug:disable_logs = false to do so: https://wiki.hyprland.org/Configuring/Variables/#debug
+[LOG] Creating the CHyprError!
+[LOG] Creating the LayoutManager!
+[LOG] Creating the TokenManager!
+[LOG] [hookSystem] New hook event registered: preConfigReload
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 9.82µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 9.92µs. Estimated average calc time: 0.00µs.
+[LOG] Disabling stdout logs! Check the log for further logs.
+[LOG] Creating the PointerManager!
+ChatGPT a dit :
+Thanks for sharing the crash report — it's clear now that the crash is due to NVIDIA's GBM (Generic Buffer Manager) backend:
+
+bash
+Copier
+Modifier
+/usr/lib/x86_64-linux-gnu/gbm/nvidia-drm_gbm.so
+Hyprland received signal 11(SEGV)
+This is a known issue when using NVIDIA GPUs with GBM on Wayland compositors like Hyprland, especially on non-Nix distros like Parrot.
+
+✅ Solutions to Fix the Crash
+🔧 1. Force NVIDIA to use EGLStreams instead of GBM
+Unfortunately, Hyprland does not support EGLStreams, it only supports GBM, and NVIDIA’s GBM support is still problematic unless everything is perfectly configured.
+
+So you have two options:
+
+🅰️ Option A: Force Intel GPU Only (Hybrid GPU setup)
+Since your system also has an Intel iGPU (UHD 630), this is the most stable and quick fix.
+
+✅ Steps:
+
+Install envycontrol to switch GPUs:
+
+bash
+Copier
+Modifier
+sudo apt install python3-pip
+pip install envycontrol
+Switch to Intel mode:
+
+bash
+Copier
+Modifier
+sudo envycontrol -s integrated
+Reboot your system:
+
+bash
+Copier
+Modifier
+sudo reboot
+After reboot, try launching Hyprland again:
+
+bash
+Copier
+Modifier
+Hyprland
+🅱️ Option B: Use NVIDIA in GBM Mode (requires kernel config + drivers)
+Enable DRM KMS (Kernel Mode Setting) in GRUB:
+
+bash
+Copier
+Modifier
+sudo nano /etc/default/grub
+Find this line and edit it:
+
+bash
+Copier
+Modifier
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"
+Save and update grub:
+
+bash
+Copier
+Modifier
+sudo update-grub
+Check if modeset is enabled:
+
+bash
+Copier
+Modifier
+cat /sys/module/nvidia_drm/parameters/modeset
+You should see:
+
+nginx
+Copier
+Modifier
+Y
+Install required libraries (just in case):
+
+bash
+Copier
+Modifier
+sudo apt install libnvidia-egl-wayland1 libgbm1 nvidia-driver
+Make sure you’re not launching Hyprland from within X11/Xwayland.
+
+🔄 Extra Tip (test fresh config):
+Try with a fresh config in Intel mode:
+
+bash
+Copier
+Modifier
+mv ~/.config/hypr ~/.config/hypr.bak
+Hyprland
+❗ If all else fails…
+Hyprland is known to be unstable with NVIDIA on Debian/Parrot. You may want to consider:
+
+Using Intel GPU only
+
+Trying Arch-based distros (like EndeavourOS, NixOS or Archcraft) where Hyprland and NVIDIA have more reliable support
+
+Switching to a Wayland compositor like Sway (Intel-only) or Wayfire if Hyprland keeps crashing
+
+Want me to help you switch to Intel GPU and auto-configure Hyprland?
+
+Vous avez dit :
+I install this hyprland in a debian based can I found in web a configure repo for this ?
+ChatGPT a dit :
+Yes! Since you're on a Debian-based system (Parrot OS) and using Hyprland, there aren't official Debian packages yet — but you can use community-maintained configurations and scripts to make your life easier.
+
+Here’s how to proceed:
+
+✅ 1. 🗃️ GitHub Repos with Preconfigured Hyprland Dotfiles
+These give you ready-to-use themes, keybindings, status bars, and scripts (especially tuned for Intel-only or hybrid GPU laptops):
+
+🔹 Good repositories:
+
+Repo	Description
+hyprdots by ghostdevv	Complete Hyprland setup with waybar, rofi, themes, and power scripts
+hyprland-dotfiles by primis	Clean config with good NVIDIA compatibility info
+hyprland-dots by Vitaly	Minimal config with power menu, workspace previews
+dotfiles by j4r0w	For Debian-based distros, well-documented setup
+📥 2. Example: Clone and use hyprdots
+bash
+Copier
+Modifier
+cd ~
+git clone https://github.com/ghostdevv/hyprdots.git
+cd hyprdots
+./install.sh
+⚠️ It may overwrite your existing config in ~/.config/hypr/, waybar/, wofi/, etc. Back them up first.
+
+🔄 3. If you want only the config files
+Clone one of the above and manually copy the .config/hypr folder:
+
+bash
+Copier
+Modifier
+cd ~
+git clone https://github.com/primis/hyprland-dotfiles.git
+cp -r hyprland-dotfiles/hypr ~/.config/
+Then run:
+
+bash
+Copier
+Modifier
+Hyprland
+📌 BONUS: Debian-specific install script
+If you want a script to install Hyprland + dependencies properly on Debian:
+
+https://github.com/NotKern/hyprland-debian-installer
+
+It sets up:
+
+Hyprland from source
+
+NVIDIA (or Intel) support
+
+Waybar, Wofi, Kitty, etc.
+
+Do you want me to find you a config that's minimal and NVIDIA-friendly, or something flashy with animations and a polybar/waybar setup?
+
+Vous avez dit :
+Make sure you’re not launching Hyprland from within X11/Xwayland.
+
+how I can know ?
+ChatGPT a dit :
+Great question — it’s important because Hyprland only works properly under a pure Wayland session, and launching it from inside an X11 session (like from XFCE, GNOME, etc.) will break it or cause crashes like the one you got.
+
+✅ How to Know If You Are in X11 or Wayland
+📌 Run this in your terminal:
+bash
+Copier
+Modifier
+echo $XDG_SESSION_TYPE
+🔍 You’ll see one of the following:
+x11 → ❌ You're in an X11 session (bad for Hyprland)
+
+wayland → ✅ You're in a Wayland session (good for Hyprland)
+
+💡 If you're in x11, here's what to do:
+You should not run Hyprland from inside a graphical X11 session (like running it from GNOME Terminal or XFCE Terminal). Instead, you should:
+
+✅ Use a TTY to launch Hyprland:
+Press Ctrl + Alt + F3 (or F2 to F6) to go to a TTY
+
+Log in with your username and password
+
+Then launch Hyprland like this:
+
+bash
+Copier
+Modifier
+Hyprland
+💡 Optional: Create a proper login session for Hyprland (so it's selectable at boot):
+If you're using a display manager like gdm, sddm, or lightdm, you can add a .desktop session file so Hyprland shows up at login.
+
+1. Create this file:
+bash
+Copier
+Modifier
+sudo nano /usr/share/wayland-sessions/hyprland.desktop
+2. Paste this in:
+ini
+Copier
+Modifier
+[Desktop Entry]
+Name=Hyprland
+Comment=Wayland window manager
+Exec=Hyprland
+Type=Application
+X-GDM-Session-Type=wayland
+DesktopNames=Hyprland
+Save and reboot — you’ll be able to pick Hyprland from your display manager!
+
+Want me to help you automate that or make a script to switch to TTY and launch Hyprland cleanly?
+
+Vous avez dit :
+Hyprland
+
+┌─[dx$@parrot]─[~]
+└──╼ $Hyprland 
+Welcome to Hyprland!
+[LOG] Instance Signature: 918d8340afd652b011b937d29d5eea0be08467f5_1744743934_1780102183
+[LOG] Runtime directory: /run/user/1000/hypr/918d8340afd652b011b937d29d5eea0be08467f5_1744743934_1780102183
+[LOG] Hyprland PID: 4664
+[LOG] ===== SYSTEM INFO: =====
+[LOG] System name: Linux
+[LOG] Node name: parrot
+[LOG] Release: 6.11+parrot-amd64
+[LOG] Version: #1 SMP PREEMPT_DYNAMIC Debian 6.11.5-1parrot1 (2024-12-13)
+
+
+[LOG] GPU information:
+00:02.0 VGA compatible controller [0300]: Intel Corporation CoffeeLake-H GT2 [UHD Graphics 630] [8086:3e9b] (rev 02) (prog-if 00 [VGA controller])
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU117GLM [Quadro T2000 Mobile / Max-Q] [10de:1fb8] (rev a1) (prog-if 00 [VGA controller])
+
+
+[WARN] Warning: you're using an NVIDIA GPU. Make sure you follow the instructions on the wiki if anything is amiss.
+
+[LOG] os-release:
+PRETTY_NAME="Parrot Security 6.3 (lorikeet)"
+NAME="Parrot Security"
+VERSION_ID="6.3"
+VERSION="6.3 (lorikeet)"
+VERSION_CODENAME=lory
+ID=debian
+HOME_URL="https://www.parrotsec.org/"
+SUPPORT_URL="https://www.parrotsec.org/community/"
+BUG_REPORT_URL="https://gitlab.com/parrotsec/"
+
+[LOG] ========================
+
+
+
+[INFO] If you are crashing, or encounter any bugs, please consult https://wiki.hyprland.org/Crashes-and-Bugs/
+
+
+[LOG] 
+Current splash: The AUR packages always work, except for the times they don't.
+
+
+[LOG] Old rlimit: soft -> 1024, hard -> 1073741816
+[LOG] New rlimit: soft -> 1073741816, hard -> 1073741816
+[LOG] Creating the EventLoopManager!
+[LOG] Creating the HookSystem!
+[LOG] Creating the KeybindManager!
+[LOG] Creating the AnimationManager!
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 34.66µs. Estimated average calc time: 0.00µs.
+[LOG] Creating the ConfigManager!
+[WARN] Creating config home directory
+[WARN] No config file found; attempting to generate.
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 10.41µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[INFO] !!!!HEY YOU, YES YOU!!!!: further logs to stdout / logfile are disabled by default. BEFORE SENDING THIS LOG, ENABLE THEM. Use debug:disable_logs = false to do so: https://wiki.hyprland.org/Configuring/Variables/#debug
+[LOG] Creating the CHyprError!
+[LOG] Creating the LayoutManager!
+[LOG] Creating the TokenManager!
+[LOG] [hookSystem] New hook event registered: preConfigReload
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 23.20µs. Estimated average calc time: 0.00µs.
+[LOG] Using config: /home/dx$/.config/hypr/hyprland.conf
+[LOG] Created a bezier curve, baked 255 points, mem usage: 4.08kB, time to bake: 9.99µs. Estimated average calc time: 0.00µs.
+Hyprland has crashed :( Consult the crash report at /home/dx$/.cache/hyprland/hyprlandCrashReport4664.txt for more information.
+Aborted
+┌─[✗]─[dx$@parrot]─[~]
+└──╼ $
+ChatGPT a dit :
+You're getting closer! 🎯 From the new logs, we can tell:
+
+✅ Hyprland is starting correctly and trying to load.
+
+❌ But it's crashing again, and now it's creating a fresh config (which might not be compatible with your system or GPU).
+
+📌 Key Problem:
+Hyprland has crashed :(... again, most likely due to NVIDIA and/or config error.
+
+This usually happens when:
+
+You're still on NVIDIA GPU (or the NVIDIA driver/GBM is not cooperating).
+
+You’re running from X11 (or not a proper Wayland session).
+
+A missing compositor dependency (like xdg-desktop-portal-wlr, xwayland, etc.).
+
+Or, Hyprland's config is incomplete or empty.
+
+✅ Let's Fix It — Step by Step
+🧼 1. Switch to Intel GPU temporarily (easy and stable)
+Since you have an Intel iGPU, you can bypass NVIDIA headaches:
+
+bash
+Copier
+Modifier
+sudo envycontrol -s integrated
+sudo reboot
+Then run:
+
+bash
+Copier
+Modifier
+Hyprland
+🧰 2. (Optional) Install basic dependencies for a functional Hyprland session
+If it still crashes, install these minimum tools (you can later add waybar etc.):
+
+bash
+Copier
+Modifier
+sudo apt install \
+    xwayland \
+    xdg-desktop-portal-wlr \
+    wofi \
+    kitty \
+    rofi \
+    wl-clipboard \
+    brightnessctl \
+    playerctl \
+    slurp grim \
+    pulseaudio pavucontrol \
+    network-manager-gnome
+📦 3. (Optional but useful) Get a working config from GitHub
+Instead of letting Hyprland generate a broken one, grab this example from ghostdevv:
+
+bash
+Copier
+Modifier
+git clone https://github.com/ghostdevv/hyprdots
+cp -r hyprdots/.config/hypr ~/.config/
+Then:
+
+bash
+Copier
+Modifier
+Hyprland
+🧪 4. Or just test a minimal working config (clean + safe):
+Create your own minimal ~/.config/hypr/hyprland.conf:
+
+bash
+Copier
+Modifier
+mkdir -p ~/.config/hypr
+nano ~/.config/hypr/hyprland.conf
+Paste this:
+
+ini
+Copier
+Modifier
+monitor=,preferred,auto,1
+exec = kitty
+exec-once = wofi --show drun
+input {
+  kb_layout = us
+}
+general {
+  gaps_in = 5
+  border_size = 2
+  layout = dwindle
+}
+Save, then:
+
+bash
+Copier
+Modifier
+Hyprland
+🔁 Final Test
+Before running again, double check your GPU mode:
+
+bash
+Copier
+Modifier
+echo $XDG_SESSION_TYPE
+Make sure it shows wayland.
+
+Want me to send you a clean, NVIDIA-friendly .config folder zip or write a custom config based on your setup?
+
+Vous avez dit :
+I think I use hyprland now and I write the command hyprland
+ChatGPT a dit :
+Nice! 🔥 That’s a good sign — if you wrote Hyprland and you didn’t get an instant crash or error, you’re probably in the correct environment now, maybe even inside a working Wayland session.
+
+Let’s double-check everything:
+
+✅ To Confirm You’re Inside Hyprland:
+Run the following from inside a terminal (like kitty, alacritty, or foot):
+
+bash
+Copier
+Modifier
+echo $XDG_SESSION_TYPE
+If it shows wayland → ✅ You’re running in a proper Hyprland session.
+
+If it shows x11 → ❌ You're still inside X11 — not good for Hyprland.
+
+🧭 What Should You See Inside Hyprland?
+If it’s working, you should:
+
+Be inside a minimal empty desktop
+
+See your cursor
+
+Be able to open a terminal using Super + Enter
+
+Be able to open apps using Super + R or wofi/rofi
+
+If it’s just a black screen, don’t worry — that just means you don’t have anything set to launch (no exec = kitty or waybar, etc.).
+
+✅ Try launching a terminal:
+Press Super (Windows key) + Enter
+
+This is the default binding for launching a terminal (kitty, alacritty, etc.)
+
+If nothing happens, maybe your config doesn’t include it
+
+You can add this to ~/.config/hypr/hyprland.conf to be sure:
+
+ini
+Copier
+Modifier
+exec-once = kitty
+Then log out and start again:
+
+bash
+Copier
+Modifier
+Hyprland
+🧠 Want a GUI + bar + launcher?
+Let me know — I can instantly give you:
+
+Waybar
+
+Wofi or Rofi launcher
+
+Power menu
+
+Wallpaper setup
+
+Keybindings like Super + Q to close windows, etc.
+
+✅ Just confirm:
+
+Do you want a minimal, clean setup, or a fancy one with animations and bar?
+
+Do you prefer Kitty, Alacritty, or any other terminal?
+
+Want me to build your entire ~/.config/hypr folder ready to go?
+
+You're 90% there, let's make it perfect now 👨‍💻
+
+Vous avez dit :
+is that good .
+┌─[dx$@parrot]─[~]
+└──╼ $nvidia-smi 
+Tue Apr 15 20:10:51 2025       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.216.01             Driver Version: 535.216.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Quadro T2000                   Off | 00000000:01:00.0 Off |                  N/A |
+| N/A   34C    P8               3W /  60W |      3MiB /  4096MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      1600      G   Hyprland                                      1MiB |
++---------------------------------------------------------------------------------------+
+┌─[dx$@parrot]─[~]
+└──╼ $lpci -s 01:00.0 -v
+bash: lpci: command not found
+┌─[✗]─[dx$@parrot]─[~]
+└──╼ $lspci -s 01:00.0 -v
+01:00.0 VGA compatible controller: NVIDIA Corporation TU117GLM [Quadro T2000 Mobile / Max-Q] (rev a1) (prog-if 00 [VGA controller])
+	Subsystem: Lenovo TU117GLM [Quadro T2000 Mobile / Max-Q]
+	Flags: bus master, fast devsel, latency 0, IRQ 181
+	Memory at ea000000 (32-bit, non-prefetchable) [size=16M]
+	Memory at a0000000 (64-bit, prefetchable) [size=256M]
+	Memory at b0000000 (64-bit, prefetchable) [size=32M]
+	I/O ports at 2000 [size=128]
+	Expansion ROM at eb080000 [virtual] [disabled] [size=512K]
+	Capabilities: <access denied>
+	Kernel driver in use: nvidia
+	Kernel modules: nvidia
+ChatGPT a dit :
+Yes, that's actually very good! 🎉 You're now running Hyprland using your NVIDIA GPU, and it's active without crashing. Here's a breakdown of what your outputs mean:
+
+✅ nvidia-smi Output:
+Shows Hyprland is listed as a running process using 1 MiB GPU memory → Hyprland is using NVIDIA correctly
+
+Driver version: 535.216.01 → recent and compatible
+
+CUDA version: 12.2 → good for acceleration (if needed for AI work later)
+
+GPU is in low power mode (P8), as expected when not under load
+
+✅ lspci Output:
+Kernel driver in use: nvidia → you're not using Nouveau (open-source) fallback, you're running the official NVIDIA module ✅
+
+❗ Just one small typo:
+You typed lpci instead of lspci:
+
+bash
+Copier
+Modifier
+└──╼ $lpci -s 01:00.0 -v
+bash: lpci: command not found
+No worries, lspci is the correct command — and you already fixed that 👍
+
+🧠 Final Confirmation:
+You are now running Hyprland on Wayland, using the dedicated NVIDIA Quadro GPU — and without crashing! 🎯
+
+🔧 Next Steps You Can Do (Optional):
+Tweak config (~/.config/hypr/hyprland.conf)
+
+Add keybindings
+
+Add apps to launch on startup (exec-once)
+
+Add animation options and blur effects
+
+Install Waybar or Eww for a cool bar:
+
+bash
+Copier
+Modifier
+sudo apt install waybar
+Install a launcher like Wofi:
+
+bash
+Copier
+Modifier
+sudo apt install wofi
+Set wallpaper (with swaybg):
+
+bash
+Copier
+Modifier
+sudo apt install swaybg
+swaybg -i /path/to/wallpaper.jpg -m fill &
+Want me to give you a custom hyprland.conf with:
+✅ NVIDIA-optimized setup
+
+✅ Kitty or Alacritty terminal
+
+✅ Launcher and status bar
+
+✅ Keybindings and blur
+
+Just say the word and I’ll drop it all ready to paste 🔧
+
+Vous avez dit :
+I use now Hyprland but I wanna update it to jakooli debian hyprland. guide me to not have problem:
+┌─[dx$@parrot]─[~]
+└──╼ $ git clone https://github.com/JaKooLit/Debian-Hyprland.git
+Cloning into 'Debian-Hyprland'...
+remote: Enumerating objects: 3139, done.
+remote: Counting objects: 100% (473/473), done.
+remote: Compressing objects: 100% (270/270), done.
+remote: Total 3139 (delta 219), reused 206 (delta 203), pack-reused 2666 (from 2)
+Receiving objects: 100% (3139/3139), 59.29 MiB | 12.23 MiB/s, done.
+Resolving deltas: 100% (2090/2090), done.
+┌─[dx$@parrot]─[~]
+└──╼ $cd De
+Debian-Hyprland/ Desktop/         
+┌─[dx$@parrot]─[~]
+└──╼ $cd Debian-Hyprland/
+┌─[dx$@parrot]─[~/Debian-Hyprland]
+└──╼ $ls
+assets           CODE_OF_CONDUCT.md            install-scripts  preset.sh
+auto-install.sh  COMMIT_MESSAGE_GUIDELINES.md  install.sh       README.md
+CHANGELOGS.md    CONTRIBUTING.md               LICENSE.md       uninstall.sh
+┌─[dx$@parrot]─[~/Debian-Hyprland]
+└──╼ $cat install.sh 
+#!/bin/bash
+# https://github.com/JaKooLit
+
+clear
+
+# Set some colors for output messages
+OK="$(tput setaf 2)[OK]$(tput sgr0)"
+ERROR="$(tput setaf 1)[ERROR]$(tput sgr0)"
+NOTE="$(tput setaf 3)[NOTE]$(tput sgr0)"
+INFO="$(tput setaf 4)[INFO]$(tput sgr0)"
+WARN="$(tput setaf 1)[WARN]$(tput sgr0)"
+CAT="$(tput setaf 6)[ACTION]$(tput sgr0)"
+MAGENTA="$(tput setaf 5)"
+ORANGE="$(tput setaf 214)"
+WARNING="$(tput setaf 1)"
+YELLOW="$(tput setaf 3)"
+GREEN="$(tput setaf 2)"
+BLUE="$(tput setaf 4)"
+SKY_BLUE="$(tput setaf 6)"
+RESET="$(tput sgr0)"
+
+
+# Create Directory for Install Logs
+if [ ! -d Install-Logs ]; then
+    mkdir Install-Logs
+fi
+
+# Set the name of the log file to include the current date and time
+LOG="Install-Logs/01-Hyprland-Install-Scripts-$(date +%d-%H%M%S).log"
+
+# Check if running as root. If root, script will exit
+if [[ $EUID -eq 0 ]]; then
+    echo "${ERROR}  This script should ${WARNING}NOT${RESET} be executed as root!! Exiting......." | tee -a "$LOG"
+    printf "\n%.0s" {1..2} 
+    exit 1
+fi
+
+# Function to check if the system is Ubuntu
+is_ubuntu() {
+    # Check for 'Ubuntu' in /etc/os-release
+    if grep -q 'Ubuntu' /etc/os-release; then
+        return 0
+    fi
+    return 1
+}
+
+# Check if the system is Ubuntu
+if is_ubuntu; then
+    echo "${WARN}This script is ${WARNING}NOT intended for Ubuntu / Ubuntu Based${RESET}. Refer to ${YELLOW}README for the correct link for Ubuntu-Hyprland project${RESET}" | tee -a "$LOG"
+    exit 1
+fi
+
+# install whiptails if detected not installed. Necessary for this version
+if ! command -v whiptail >/dev/null; then
+    echo "${NOTE} - whiptail is not installed. Installing..." | tee -a "$LOG"
+    sudo apt install -y whiptail
+    printf "\n%.0s" {1..1}
+fi
+
+
+printf "\n%.0s" {1..2}  
+echo -e "\e[35m
+	╦╔═┌─┐┌─┐╦    ╦ ╦┬ ┬┌─┐┬─┐┬  ┌─┐┌┐┌┌┬┐
+	╠╩╗│ ││ │║    ╠═╣└┬┘├─┘├┬┘│  ├─┤│││ ││ 2025
+	╩ ╩└─┘└─┘╩═╝  ╩ ╩ ┴ ┴  ┴└─┴─┘┴ ┴┘└┘─┴┘ Debian Trixie / SiD
+\e[0m"
+printf "\n%.0s" {1..1} 
+
+# Welcome message using whiptail (for displaying information)
+whiptail --title "KooL Debian-Hyprland Trixie-SID (2025) Install Script" \
+    --msgbox "Welcome to KooL Debian-Hyprland Trixie-SID (2025) Install Script!!!\n\n\
+ATTENTION: Run a full system update and Reboot first !!! (Highly Recommended)\n\n\
+NOTE: If you are installing on a VM, ensure to enable 3D acceleration else Hyprland may NOT start!" \
+    15 80
+
+# Ask if the user wants to proceed
+if ! whiptail --title "Proceed with Installation?" \
+    --yesno "VERY IMPORTANT!!!\n\nYou must be able to install from source by uncommenting deb-src on /etc/apt/sources.list else script may fail to install Hyprland.\n\n\nShall we proceed?" 15 60; then
+    echo -e "\n"
+    echo "❌ ${INFO} You 🫵 chose ${YELLOW}NOT${RESET} to proceed. ${YELLOW}Exiting...${RESET}" | tee -a "$LOG"
+    echo -e "\n"
+    exit 1
+fi
+
+echo "👌 ${OK} 🇵🇭 ${MAGENTA}KooL..${RESET} ${SKY_BLUE}lets continue with the installation...${RESET}" | tee -a "$LOG"
+
+sleep 1
+printf "\n%.0s" {1..1}
+
+# install pciutils if detected not installed. Necessary for detecting GPU
+if ! dpkg -l | grep -w pciutils > /dev/null; then
+    echo "pciutils is not installed. Installing..." | tee -a "$LOG"
+    sudo apt install -y pciutils
+    printf "\n%.0s" {1..1}
+fi
+
+
+# Path to the install-scripts directory
+script_directory=install-scripts
+
+# Function to execute a script if it exists and make it executable
+execute_script() {
+    local script="$1"
+    local script_path="$script_directory/$script"
+    if [ -f "$script_path" ]; then
+        chmod +x "$script_path"
+        if [ -x "$script_path" ]; then
+            env "$script_path"
+        else
+            echo "Failed to make script '$script' executable." | tee -a "$LOG"
+        fi
+    else
+        echo "Script '$script' not found in '$script_directory'." | tee -a "$LOG"
+    fi
+}
+
+#################
+## Default values for the options (will be overwritten by preset file if available)
+gtk_themes="OFF"
+bluetooth="OFF"
+thunar="OFF"
+ags="OFF"
+sddm="OFF"
+sddm_theme="OFF"
+xdph="OFF"
+zsh="OFF"
+pokemon="OFF"
+rog="OFF"
+dots="OFF"
+input_group="OFF"
+nvidia="OFF"
+
+# Function to load preset file
+load_preset() {
+    if [ -f "$1" ]; then
+        echo "✅ Loading preset: $1"
+        source "$1"
+    else
+        echo "⚠️ Preset file not found: $1. Using default values."
+    fi
+}
+
+# Check if --preset argument is passed
+if [[ "$1" == "--preset" && -n "$2" ]]; then
+    load_preset "$2"
+fi
+
+# List of services to check for active login managers
+services=("gdm.service" "gdm3.service" "lightdm.service" "lxdm.service")
+
+# Function to check if any login services are active
+check_services_running() {
+    active_services=()  # Array to store active services
+    for svc in "${services[@]}"; do
+        if systemctl is-active --quiet "$svc"; then
+            active_services+=("$svc")  
+        fi
+    done
+
+    if [ ${#active_services[@]} -gt 0 ]; then
+        return 0  
+    else
+        return 1  
+    fi
+}
+
+if check_services_running; then
+    active_list=$(printf "%s\n" "${active_services[@]}")
+
+    # Display the active login manager(s) in the whiptail message box
+    whiptail --title "Active non-SDDM login manager(s) detected" \
+        --msgbox "The following login manager(s) are active:\n\n$active_list\n\nIf you want to install SDDM and SDDM theme, stop and disable first the active services above, and reboot before running this script\nRefer to README on switching to SDDM if you really want SDDM\n\nNOTE: Your option to install SDDM and SDDM theme has now been removed\n\n- Ja " 28 80
+fi
+
+# Check if NVIDIA GPU is detected
+nvidia_detected=false
+if lspci | grep -i "nvidia" &> /dev/null; then
+    nvidia_detected=true
+    whiptail --title "NVIDIA GPU Detected" --msgbox "NVIDIA GPU detected in your system.\n\nNOTE: The script will install nvidia-dkms, nvidia-utils, and nvidia-settings if you choose to configure." 12 60
+fi
+
+# Initialize the options array for whiptail checklist
+options_command=(
+    whiptail --title "Select Options" --checklist "Choose options to install or configure\nNOTE: 'SPACEBAR' to select & 'TAB' key to change selection" 28 85 20
+)
+
+# Add NVIDIA options if detected
+if [ "$nvidia_detected" == "true" ]; then
+    options_command+=(
+        "nvidia" "Do you want script to configure NVIDIA GPU?" "OFF"
+    )
+fi
+
+# Check if user is already in the 'input' group
+input_group_detected=false
+if ! groups "$(whoami)" | grep -q '\binput\b'; then
+    input_group_detected=true
+    whiptail --title "Input Group" --msgbox "You are not currently in the input group.\n\nAdding you to the input group might be necessary for the Waybar keyboard-state functionality." 12 60
+fi
+
+# Add 'input_group' option if user is not in input group
+if [ "$input_group_detected" == "true" ]; then
+    options_command+=(
+        "input_group" "Add your USER to input group for some waybar functionality?" "OFF"
+    )
+fi
+
+# Conditionally add SDDM and SDDM theme options if no active login manager is found
+if ! check_services_running; then
+    options_command+=(
+        "sddm" "Install & configure SDDM login manager?" "OFF"
+        "sddm_theme" "Download & Install Additional SDDM theme?" "OFF"
+    )
+fi
+
+# Add the remaining static options
+options_command+=(
+    "gtk_themes" "Install GTK themes (required for Dark/Light function)" "OFF"
+    "bluetooth" "Do you want script to configure Bluetooth?" "OFF"
+    "thunar" "Do you want Thunar file manager to be installed?" "OFF"
+    "ags" "Install AGS v1 for Desktop-Like Overview" "OFF"
+    "xdph" "Install XDG-DESKTOP-PORTAL-HYPRLAND (for screen share)?" "OFF"
+    "zsh" "Install zsh shell with Oh-My-Zsh?" "OFF"
+    "pokemon" "Add Pokemon color scripts to your terminal?" "OFF"
+    "rog" "Are you installing on Asus ROG laptops?" "OFF"
+    "dots" "Download and install pre-configured KooL Hyprland dotfiles?" "OFF"
+)
+
+# Capture the selected options before the while loop starts
+while true; do
+    selected_options=$("${options_command[@]}" 3>&1 1>&2 2>&3)
+
+    # Check if the user pressed Cancel (exit status 1)
+    if [ $? -ne 0 ]; then
+        echo -e "\n"
+        echo "❌ ${INFO} You 🫵 cancelled the selection. ${YELLOW}Goodbye!${RESET}" | tee -a "$LOG"
+        exit 0  # Exit the script if Cancel is pressed
+    fi
+
+    # If no option was selected, notify and restart the selection
+    if [ -z "$selected_options" ]; then
+        whiptail --title "Warning" --msgbox "No options were selected. Please select at least one option." 10 60
+        continue  # Return to selection if no options selected
+    fi
+
+    # Strip the quotes and trim spaces if necessary (sanitize the input)
+    selected_options=$(echo "$selected_options" | tr -d '"' | tr -s ' ')
+
+    # Convert selected options into an array (preserving spaces in values)
+    IFS=' ' read -r -a options <<< "$selected_options"
+
+    # Check if the "dots" option was selected
+    dots_selected="OFF"
+    for option in "${options[@]}"; do
+        if [[ "$option" == "dots" ]]; then
+            dots_selected="ON"
+            break
+        fi
+    done
+
+    # If "dots" is not selected, show a note and ask the user to proceed or return to choices
+    if [[ "$dots_selected" == "OFF" ]]; then
+        # Show a note about not selecting the "dots" option
+        if ! whiptail --title "KooL Hyprland Dot Files" --yesno \
+        "You have not selected to install the pre-configured KooL Hyprland dotfiles.\n\nKindly NOTE that if you proceed without Dots, Hyprland will start with default vanilla Hyprland configuration and I won't be able to give you support.\n\nWould you like to continue install without KooL Hyprland Dots or return to choices/options?" \
+        --yes-button "Continue" --no-button "Return" 15 90; then
+            echo "🔙 Returning to options..." | tee -a "$LOG"
+            continue
+        else
+            # User chose to continue
+            echo "${INFO} ⚠️ Continuing WITHOUT the dotfiles installation..." | tee -a "$LOG"
+			printf "\n%.0s" {1..1}
+        fi
+    fi
+
+    # Prepare the confirmation message
+    confirm_message="You have selected the following options:\n\n"
+    for option in "${options[@]}"; do
+        confirm_message+=" - $option\n"
+    done
+    confirm_message+="\nAre you happy with these choices?"
+
+    # Confirmation prompt
+    if ! whiptail --title "Confirm Your Choices" --yesno "$(printf "%s" "$confirm_message")" 25 80; then
+        echo -e "\n"
+        echo "❌ ${SKY_BLUE}You're not 🫵 happy${RESET}. ${YELLOW}Returning to options...${RESET}" | tee -a "$LOG"
+        continue 
+    fi
+
+    echo "👌 ${OK} You confirmed your choices. Proceeding with ${SKY_BLUE}KooL 🇵🇭 Hyprland Installation...${RESET}" | tee -a "$LOG"
+    break  
+done
+
+printf "\n%.0s" {1..1}
+
+echo "${INFO} Running a ${SKY_BLUE}full system update...${RESET}" | tee -a "$LOG"
+sudo apt update
+
+sleep 1
+# execute pre clean up
+execute_script "02-pre-cleanup.sh"
+
+echo "${INFO} Installing ${SKY_BLUE}necessary dependencies...${RESET}" | tee -a "$LOG"
+sleep 1
+execute_script "00-dependencies.sh"
+
+echo "${INFO} Installing ${SKY_BLUE}necessary fonts...${RESET}" | tee -a "$LOG"
+sleep 1
+execute_script "fonts.sh"
+
+echo "${INFO} Installing ${SKY_BLUE}KooL Hyprland packages...${RESET}" | tee -a "$LOG"
+sleep 1
+execute_script "01-hypr-pkgs.sh"
+sleep 1
+execute_script "hyprland.sh"
+sleep 1
+execute_script "wallust.sh"
+sleep 1
+execute_script "swww.sh"
+sleep 1
+execute_script "rofi-wayland.sh"
+sleep 1
+execute_script "hyprlock.sh"
+sleep 1
+execute_script "hyprlang.sh"
+sleep 1
+execute_script "hypridle.sh"
+
+#execute_script "imagemagick.sh" #this is for compiling from source. 07 Sep 2024
+# execute_script "waybar-git.sh" only if waybar on repo is old
+
+sleep 1
+# Clean up the selected options (remove quotes and trim spaces)
+selected_options=$(echo "$selected_options" | tr -d '"' | tr -s ' ')
+
+# Convert selected options into an array (splitting by spaces)
+IFS=' ' read -r -a options <<< "$selected_options"
+
+# Loop through selected options
+for option in "${options[@]}"; do
+    case "$option" in
+        sddm)
+            if check_services_running; then
+                active_list=$(printf "%s\n" "${active_services[@]}")
+                whiptail --title "Error" --msgbox "One of the following login services is running:\n$active_list\n\nPlease stop & disable it or DO not choose SDDM." 12 60
+                exec "$0"  
+            else
+                echo "${INFO} Installing and configuring ${SKY_BLUE}SDDM...${RESET}" | tee -a "$LOG"
+                execute_script "sddm.sh"
+            fi
+            ;;
+        nvidia)
+            echo "${INFO} Configuring ${SKY_BLUE}nvidia stuff${RESET}" | tee -a "$LOG"
+            execute_script "nvidia.sh"
+            ;;
+        gtk_themes)
+            echo "${INFO} Installing ${SKY_BLUE}GTK themes...${RESET}" | tee -a "$LOG"
+            execute_script "gtk_themes.sh"
+            ;;
+        input_group)
+            echo "${INFO} Adding user into ${SKY_BLUE}input group...${RESET}" | tee -a "$LOG"
+            execute_script "InputGroup.sh"
+            ;;
+        ags)
+            echo "${INFO} Installing ${SKY_BLUE}AGS v1 for Desktop Overview...${RESET}" | tee -a "$LOG"
+            execute_script "ags.sh"
+            ;;
+        xdph)
+            echo "${INFO} Installing ${SKY_BLUE}xdg-desktop-portal-hyprland...${RESET}" | tee -a "$LOG"
+            execute_script "xdph.sh"
+            ;;
+        bluetooth)
+            echo "${INFO} Configuring ${SKY_BLUE}Bluetooth...${RESET}" | tee -a "$LOG"
+            execute_script "bluetooth.sh"
+            ;;
+        thunar)
+            echo "${INFO} Installing ${SKY_BLUE}Thunar file manager...${RESET}" | tee -a "$LOG"
+            execute_script "thunar.sh"
+            execute_script "thunar_default.sh"
+            ;;
+        sddm_theme)
+            echo "${INFO} Downloading & Installing ${SKY_BLUE}Additional SDDM theme...${RESET}" | tee -a "$LOG"
+            execute_script "sddm_theme.sh"
+            ;;
+        zsh)
+            echo "${INFO} Installing ${SKY_BLUE}zsh with Oh-My-Zsh...${RESET}" | tee -a "$LOG"
+            execute_script "zsh.sh"
+            ;;
+        pokemon)
+            echo "${INFO} Adding ${SKY_BLUE}Pokemon color scripts to terminal...${RESET}" | tee -a "$LOG"
+            execute_script "zsh_pokemon.sh"
+            ;;
+        rog)
+            echo "${INFO} Installing ${SKY_BLUE}ROG laptop packages...${RESET}" | tee -a "$LOG"
+            execute_script "rog.sh"
+            ;;
+        dots)
+            echo "${INFO} Installing pre-configured ${SKY_BLUE}KooL Hyprland dotfiles...${RESET}" | tee -a "$LOG"
+            execute_script "dotfiles-branch.sh"
+            ;;
+        *)
+            echo "Unknown option: $option" | tee -a "$LOG"
+            ;;
+    esac
+done
+
+# Perform cleanup
+printf "\n${OK} Performing some clean up.\n"
+files_to_delete=("JetBrainsMono.tar.xz" "VictorMonoAll.zip" "FantasqueSansMono.zip")
+for file in "${files_to_delete[@]}"; do
+    if [ -e "$file" ]; then
+        echo "$file found. Deleting..." | tee -a "$LOG"
+        rm "$file"
+        echo "$file deleted successfully." | tee -a "$LOG"
+    fi
+done
+
+
+clear
+
+# copy fastfetch config if debian is not present
+if [ ! -f "$HOME/.config/fastfetch/debian.png" ]; then
+    cp -r assets/fastfetch "$HOME/.config/"
+fi
+
+printf "\n%.0s" {1..2}
+# final check essential packages if it is installed
+execute_script "03-Final-Check.sh"
+
+printf "\n%.0s" {1..1}
+
+# Check if either hyprland or hyprland-git is installed
+if dpkg -l | grep -qw hyprland; then
+    printf "\n ${OK} 👌 Hyprland is installed. However, some essential packages may not be installed. Please see above!"
+    printf "\n${CAT} Ignore this message if it states ${YELLOW}All essential packages${RESET} are installed as per above\n"
+    sleep 2
+    printf "\n%.0s" {1..2}
+
+    printf "${SKY_BLUE}Thank you${RESET} 🫰 for using 🇵🇭 ${MAGENTA}KooL's Hyprland Dots${RESET}. ${YELLOW}Enjoy and Have a good day!${RESET}"
+    printf "\n%.0s" {1..2}
+
+    printf "\n${NOTE} You can start Hyprland by typing ${SKY_BLUE}Hyprland${RESET} (IF SDDM is not installed) (note the capital H!).\n"
+    printf "\n${NOTE} However, it is ${YELLOW}highly recommended to reboot${RESET} your system.\n\n"
+
+    while true; do
+        echo -n "${CAT} Would you like to reboot now? (y/n): "
+        read HYP
+        HYP=$(echo "$HYP" | tr '[:upper:]' '[:lower:]')
+
+        if [[ "$HYP" == "y" || "$HYP" == "yes" ]]; then
+            echo "${INFO} Rebooting now..."
+            systemctl reboot 
+            break
+        elif [[ "$HYP" == "n" || "$HYP" == "no" ]]; then
+            echo "👌 ${OK} You chose NOT to reboot"
+            printf "\n%.0s" {1..1}
+            # Check if NVIDIA GPU is present
+            if lspci | grep -i "nvidia" &> /dev/null; then
+                echo "${INFO} HOWEVER ${YELLOW}NVIDIA GPU${RESET} detected. Reminder that you must REBOOT your SYSTEM..."
+                printf "\n%.0s" {1..1}
+            fi
+            break
+        else
+            echo "${WARN} Invalid response. Please answer with 'y' or 'n'."
+        fi
+    done
+else
+    # Print error message if neither package is installed
+    printf "\n${WARN} Hyprland is NOT installed. Please check 00_CHECK-time_installed.log and other files in the Install-Logs/ directory..."
+    printf "\n%.0s" {1..3}
+    exit 1
+fi
+
+printf "\n%.0s" {1..2}
+
+┌─[dx$@parrot]─[~/Debian-Hyprland]
+└──╼ $
+ChatGPT a dit :
+Éléments mémorisés mis à jour
+Perfect, David! You're all set up to move forward safely — and here's your personalized guide to update to JaKooLit's Hyprland on Parrot OS, with no problems:
+
+✅ TL;DR — What You Should Do
+1. Back up your current Hyprland config:
+bash
+Copier
+Modifier
+mv ~/.config/hypr ~/.config/hypr.backup.$(date +%s)
+2. Update your system fully first (this is mandatory for the script to succeed):
+bash
+Copier
+Modifier
+sudo apt update && sudo apt full-upgrade -y
+sudo reboot
+3. Uncomment deb-src in sources.list:
+Edit:
+
+bash
+Copier
+Modifier
+sudo nano /etc/apt/sources.list
+Uncomment lines like:
+
+bash
+Copier
+Modifier
+deb-src http://deb.parrot.sh/parrot parrot main contrib non-free
+Then:
+
+bash
+Copier
+Modifier
+sudo apt update
+4. Start the script:
+bash
+Copier
+Modifier
+cd ~/Debian-Hyprland
+./install.sh
+5. Recommended options during install:
+Since you're on Parrot OS with NVIDIA, choose:
+
+✅ nvidia
+
+✅ xdph (for screen sharing)
+
+✅ gtk_themes (nice look)
+
+✅ dots (to get the full JaKooLit Hyprland config)
+
+(Optional) zsh, rofi, bluetooth, thunar, etc.
+
+⚠️ Do not enable SDDM unless you're removing the existing login manager.
+
+6. Reboot when asked.
+This step is important especially if you're using NVIDIA — for all services and configs to reload cleanly.
+
+💡 Extra Tip
+Once installed, you can log in using:
+
+The command: Hyprland
+
+Or, via your display manager (if SDDM was installed)
+
+To avoid conflicts, remove or disable any old configs in ~/.config/hypr.
+
+If you want me to review the JaKooLit config, tweak anything (like waybar colors, blur strength, animation speeds), or if something breaks, just ping me!
+
+✅ You're now on track to a beautiful and stable Hyprland setup!
+
+Vous avez dit :
+what I choose:
+   │ Choose options to install or configure                                            │ 
+    │ NOTE: 'SPACEBAR' to select & 'TAB' key to change selection                        │ 
+    │                                                                                   │ 
+    │  [*] nvidia       Do you want script to configure NVIDIA GPU?                     │ 
+    │  [ ] input_group  Add your USER to input group for some waybar functionality?     │ 
+    │  [ ] gtk_themes   Install GTK themes (required for Dark/Light function)           │ 
+    │  [ ] bluetooth    Do you want script to configure Bluetooth?                      │ 
+    │  [ ] thunar       Do you want Thunar file manager to be installed?                │ 
+    │  [ ] ags          Install AGS v1 for Desktop-Like Overview                        │ 
+    │  [ ] xdph         Install XDG-DESKTOP-PORTAL-HYPRLAND (for screen share)?         │ 
+    │  [ ] zsh          Install zsh shell with Oh-My-Zsh?                               │ 
+    │  [ ] pokemon      Add Pokemon color scripts to your terminal?                     │ 
+    │  [ ] rog          Are you installing on Asus ROG laptops?                         │ 
+    │  [ ] dots         Download and install pre-configured KooL Hyprland dotfiles?     │ 
+    │                                                                               
+ChatGPT a dit :
+Nice — you're right at the critical step, and your choices will define how smooth and feature-rich your Hyprland experience will be.
+
+✅ Here's what I recommend selecting for Parrot OS + NVIDIA + stable setup:
+Use SPACE to select these:
+
+✅ MUST SELECT:
+[*] nvidia → Already selected ✅ (required for NVIDIA GPU config)
+
+[ ] dots → ✅ Highly recommended (installs JaKooLit’s polished Hyprland setup with all keybinds, bar, terminal launcher, wallpapers, etc.)
+
+✅ HIGHLY RECOMMENDED:
+[ ] gtk_themes → ✅ Enables light/dark mode, improves look
+
+[ ] xdph → ✅ Install XDG Desktop Portal for Hyprland, required for screen sharing, screenshot tools, Discord, etc.
+
+✅ OPTIONAL BUT USEFUL:
+[ ] input_group → ✅ if you want keyboard layout indicator in waybar (harmless to add)
+
+[ ] zsh → ✅ Fancy terminal prompt with Oh-My-Zsh
+
+[ ] thunar → ✅ Good lightweight file manager (if you don’t have one)
+
+[ ] bluetooth → ✅ Only if you plan to use Bluetooth
+
+[ ] ags → Add if you want fancy animated desktop overview (like GNOME Activities)
+
+❌ YOU CAN SKIP:
+[ ] pokemon → For fun, adds color scripts to terminal (optional)
+
+[ ] rog → Only for Asus ROG laptops (skip it)
+
+🧠 Final Suggested Setup:
+plaintext
+Copier
+Modifier
+[*] nvidia
+[*] dots
+[*] gtk_themes
+[*] xdph
+[*] input_group
+[*] zsh
+[*] thunar
+Use TAB to move to "OK", and hit ENTER to continue.
+
+Once done, the script will do its magic, and you’ll have a full, gorgeous Hyprland experience — just reboot when it asks ✅
+
+Let me know if you want a post-install checklist after the reboot.
+
+Vous avez dit :
+Give me what just what I don't choose
+ChatGPT a dit :
+Sure! Here’s what you did not choose:
+
+plaintext
+Copier
+Modifier
+[ ] input_group      → Adds you to `input` group (needed for Waybar keyboard layout support)
+[ ] gtk_themes       → Installs themes for dark/light mode toggle and visual polish
+[ ] bluetooth        → Installs and configures Bluetooth tools
+[ ] thunar           → Lightweight graphical file manager (XFCE-based)
+[ ] ags              → Adds animated desktop overview (GNOME-like)
+[ ] xdph             → XDG Desktop Portal for Hyprland (enables screen sharing in apps like Discord, Firefox, etc.)
+[ ] zsh              → Oh-My-Zsh with themes and aliases
+[ ] pokemon          → Fun color scripts in terminal (just eye candy)
+[ ] rog              → Optimizations for Asus ROG laptops
+[ ] dots             → **KooL’s full pre-configured Hyprland setup** (keybindings, wallpapers, Waybar, Rofi, etc.)
+Let me know if you want to rerun the script and include any of them — especially:
+
+dots (recommended)
+
+xdph (for screen sharing)
+
+gtk_themes (for style)
+
+You can safely re-run the script later with those options too.
+
+Vous avez dit :
+But I don't want just can crush the system I wanna all 
+ChatGPT a dit :
+Got it! You want to fully install everything JaKooLit’s Hyprland setup offers — without risking a system crash. That’s smart and totally doable.
+
+✅ Safe and Complete Selection
+To safely install all recommended features (without system bloat or breakage), here’s what you should do on the checklist screen:
+
+Select (with SPACE):
+plaintext
+Copier
+Modifier
+[*] nvidia            → Required for your GPU
+[*] dots              → Full JaKooLit config (Waybar, keybindings, Rofi, effects, etc.)
+[*] gtk_themes        → For proper styling, light/dark mode
+[*] xdph              → Needed for screen sharing (Discord, Firefox, etc.)
+[*] input_group       → Enables Waybar keyboard layout support
+[*] zsh               → Oh-My-Zsh = better terminal experience
+[*] thunar            → Lightweight file manager
+[*] bluetooth         → Only if you use Bluetooth (otherwise, skip)
+[*] ags               → Optional: GNOME-like overview (can be CPU heavy)
+[*] pokemon           → Optional: Fancy terminal animations
+[*] rog               → Only if you're on an **Asus ROG** laptop (you’re not, so skip this)
+❌ Don’t select:
+rog → This is for Asus ROG laptops only. Not needed for your Quadro setup.
+
+✅ Final checklist:
+Here’s the recommended full setup for you:
+
+plaintext
+Copier
+Modifier
+[*] nvidia
+[*] dots
+[*] gtk_themes
+[*] xdph
+[*] input_group
+[*] zsh
+[*] thunar
+[*] bluetooth     (only if you need it)
+[*] ags           (only if you want overview/animations)
+[*] pokemon       (optional fun)
+Then hit TAB → OK to proceed.
+
+After the script:
+Reboot when it asks (yes)
+
+Log into Hyprland session from SDDM or via TTY
+
+Enjoy the full setup — everything preconfigured
+
+Let me know if you want post-install cleanup tips or config tweaks after reboot!
+
+Vous avez dit :
+
+This error appear at the top of the windows and I can't use the keyboard
+ChatGPT a dit :
+Thanks for the photo — that red error bar you're seeing is Hyprland's config error overlay. It's caused by invalid options in UserSettings.conf, and it's preventing your keyboard from working because Hyprland can't fully load its keybindings or input settings.
+
+✅ What’s causing this?
+The error says:
+
+swift
+Copier
+Modifier
+Config error in file /home/dx$/.config/hypr/UserConfigs/UserSettings.conf:
+option keybind:something does not exist
+This means your config is trying to use a setting that doesn’t exist anymore or is mistyped. This can happen with updates to Hyprland, or if a dotfile wasn’t updated properly.
+
+✅ How to Fix It (Quickly):
+1. Open a TTY session (because your keyboard in Hyprland doesn't work):
+Press: Ctrl + Alt + F3 (or F2, F4, etc.)
+
+Login with your username and password
+
+2. Rename the broken config:
+bash
+Copier
+Modifier
+mv ~/.config/hypr/UserConfigs/UserSettings.conf ~/.config/hypr/UserConfigs/UserSettings.bak
+3. (Optional) Copy default JaKooLit backup (if exists):
+bash
+Copier
+Modifier
+cp ~/.config/hypr/UserConfigs/ExampleUserSettings.conf ~/.config/hypr/UserConfigs/UserSettings.conf
+4. Reboot and try again:
+bash
+Copier
+Modifier
+reboot
+✅ Alternative fix (edit it manually):
+If you want to edit and clean the config:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/UserSettings.conf
+Look for and remove or comment out the lines that mention:
+
+keybind:keyboard_brightness_*
+
+keybind:suspend_lid_close
+
+cursor:smart*
+
+Anything that says "does not exist"
+
+Use # at the start of those lines to comment them out.
+
+✅ After it's fixed
+Once Hyprland starts cleanly:
+
+Press Super + Enter → Should open Kitty
+
+Press Super + Q → Should close windows
+
+If nothing works yet, just tell me — I can generate a clean UserSettings.conf for you instantly.
+
+Want that now?
+
+Vous avez dit :
+I press super+enter and nothing 
+ChatGPT a dit :
+Got it — if Super + Enter doesn’t work, that means the keybindings didn’t load either, likely due to the broken UserSettings.conf.
+
+Let’s fix this step-by-step so you can get your keyboard working in Hyprland:
+
+✅ Step 1: Open TTY and Rename the Broken Config
+Press Ctrl + Alt + F3 (or any F2–F6)
+
+Log in with your username and password
+
+Run these commands:
+
+bash
+Copier
+Modifier
+mv ~/.config/hypr/UserConfigs/UserSettings.conf ~/.config/hypr/UserConfigs/UserSettings.broken
+cp ~/.config/hypr/UserConfigs/ExampleUserSettings.conf ~/.config/hypr/UserConfigs/UserSettings.conf
+If ExampleUserSettings.conf does not exist, I can send you a clean config to paste.
+
+✅ Step 2: Reboot
+bash
+Copier
+Modifier
+reboot
+✅ Step 3: Try again
+Once you boot into Hyprland:
+
+Press Super + Enter → It should open a terminal (Kitty)
+
+If it works, then it means the config was successfully restored
+
+If it still doesn’t work:
+Let me give you a working default UserSettings.conf you can paste manually.
+
+Run:
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/UserSettings.conf
+Paste this:
+ini
+Copier
+Modifier
+# Minimal working Hyprland user config
+
+env = XCURSOR_SIZE,24
+exec-once = kitty
+exec-once = waybar &
+
+input {
+  kb_layout = us
+  follow_mouse = 1
+  touchpad {
+    natural_scroll = true
+  }
+}
+
+general {
+  gaps_in = 5
+  gaps_out = 10
+  border_size = 2
+  layout = dwindle
+  no_cursor_warps = true
+}
+
+decoration {
+  rounding = 10
+  blur = true
+}
+
+animations {
+  enabled = true
+  bezier = ease, 0.25, 0.1, 0.25, 1
+  animation = windows, 1, 3, ease
+  animation = fade, 1, 3, ease
+  animation = border, 1, 3, ease
+  animation = workspaces, 1, 3, ease
+}
+
+bind = SUPER, Return, exec, kitty
+bind = SUPER, Q, killactive,
+bind = SUPER, E, exec, thunar
+bind = SUPER, R, exec, wofi --show drun
+bind = SUPER, V, togglefloating,
+bind = SUPER, Space, togglefloating,
+bind = SUPER, F, fullscreen
+Then save: Ctrl + O, Enter
+Exit: Ctrl + X
+
+Then reboot and you're good:
+
+bash
+Copier
+Modifier
+reboot
+Let me know if you want me to generate a full config with animations, waybar, wallpaper, and blur too.
+
+Vous avez dit :
+
+How I can use all shortcuts ??
+ChatGPT a dit :
+Nice! From the screenshot, you're in KooL's Hyprland setup, and the window on the right is displaying all available keyboard shortcuts (aka keybindings). That red bar is still complaining, but now everything seems functional — which is great!
+
+✅ How to Use the Shortcuts
+Here’s how to read and use the bindings you see:
+
+Basics:
+
+Key combo	Action
+SUPER + Enter	Open terminal (kitty)
+SUPER + E	Open file manager (thunar)
+SUPER + Q	Close focused window
+SUPER + R	Application launcher (rofi)
+SUPER + F	Toggle fullscreen
+SUPER + Space	Toggle floating window
+SUPER + Shift + Q	Kill active window
+Window & Workspace Control:
+
+Key combo	Action
+SUPER + Left/Right	Move between workspaces
+SUPER + Shift + Arrow	Move window to another workspace
+SUPER + Scroll Up/Down	Zoom / Resize
+SUPER + Drag	Move floating window (when dragging)
+Screenshots:
+
+Key combo	Action
+Print	Screenshot region
+Alt + Print	Screenshot full
+Ctrl + Alt + Print	Screenshot active window
+Waybar & Effects:
+
+Key combo	Action
+Ctrl + Alt + W	Reload Waybar
+Ctrl + Alt + B	Toggle blur effects
+Ctrl + Alt + R	Reload wallpaper
+Search & Misc:
+
+Key combo	Action
+SUPER (alone)	Open the keybindings window you see now
+SUPER + D	Google search via rofi
+🧠 How to See the Shortcuts Anytime?
+Just press:
+
+bash
+Copier
+Modifier
+SUPER key (Windows key)
+That opens the searchable shortcuts overlay you're seeing.
+
+You can also rebind or add your own by editing:
+
+bash
+Copier
+Modifier
+~/.config/hypr/UserConfigs/UserSettings.conf
+Want me to give you a printed list or make a custom cheat sheet as a PNG you can use as wallpaper?
+
+Vous avez dit :
+How I can enter to terminal ??
+ChatGPT a dit :
+Since your system is now running KooL's Hyprland setup, but SUPER + Enter didn’t launch the terminal, it’s likely that:
+
+Kitty is not installed, or
+
+The config is pointing to the wrong terminal
+
+✅ Quick Fix: Try these alternative shortcuts
+Press one of the following from your Hyprland session:
+
+SUPER + Return (same as Enter)
+
+Ctrl + Alt + T
+
+SUPER + R → then type kitty or xterm and press Enter
+
+✅ If nothing works, do this via TTY:
+Press Ctrl + Alt + F3 (or F2, F4…)
+
+Login
+
+Install a terminal:
+
+bash
+Copier
+Modifier
+sudo apt install kitty
+Or install another terminal:
+
+bash
+Copier
+Modifier
+sudo apt install alacritty
+✅ Then fix Hyprland to launch your terminal properly:
+Edit this file:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/UserSettings.conf
+Find the line like this:
+
+ini
+Copier
+Modifier
+exec-once = kitty
+bind = SUPER, Return, exec, kitty
+If you installed Alacritty instead, change it to:
+
+ini
+Copier
+Modifier
+exec-once = alacritty
+bind = SUPER, Return, exec, alacritty
+Save and reboot:
+
+bash
+Copier
+Modifier
+reboot
+Then SUPER + Enter should work perfectly.
+
+Would you like me to send you a complete ready-to-paste config that works with alacritty or kitty?
+
+Vous avez dit :
+
+ChatGPT a dit :
+Thanks for the clear photo — you’re getting a dependency conflict with kitty due to python3 version mismatch:
+
+kitty requires python3 < 3.12, but your system has python3.11.2-1+b1
+
+That’s because Parrot OS is based on Debian testing/unstable, and newer versions of python3 break compatibility with some packages like kitty.
+
+✅ Solution: Use a different terminal that works without python3 conflicts
+Option 1: Install alacritty (super fast GPU terminal)
+bash
+Copier
+Modifier
+sudo apt install alacritty
+Option 2: Install xterm (basic but always works)
+bash
+Copier
+Modifier
+sudo apt install xterm
+✅ Then update your Hyprland config:
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/UserSettings.conf
+Find this line:
+
+ini
+Copier
+Modifier
+bind = SUPER, Return, exec, kitty
+And change it to:
+
+ini
+Copier
+Modifier
+bind = SUPER, Return, exec, alacritty
+Or if you installed xterm:
+
+ini
+Copier
+Modifier
+bind = SUPER, Return, exec, xterm
+Also check for this line and fix if needed:
+
+ini
+Copier
+Modifier
+exec-once = alacritty
+✅ Save and reboot:
+bash
+Copier
+Modifier
+reboot
+Now SUPER + Enter should launch your terminal with no errors!
+
+Let me know if you want a fully fixed config for alacritty or if you prefer to use foot (another fast Wayland terminal).
+
+Vous avez dit :
+How about foot I have foot but there is an another place to change kitty to foot
+ChatGPT a dit :
+Great! If you already have foot installed (which is Wayland-native and lightweight), that’s a perfect choice!
+
+Yes — in KooL's Hyprland setup, there are usually multiple places where kitty is mentioned, especially because it uses modular configs.
+
+✅ Here's Where You Should Replace kitty with foot:
+1. User keybindings
+Edit the user-level config:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/UserSettings.conf
+Change all lines like:
+
+ini
+Copier
+Modifier
+bind = SUPER, Return, exec, kitty
+exec-once = kitty
+To:
+
+ini
+Copier
+Modifier
+bind = SUPER, Return, exec, foot
+exec-once = foot
+2. Dotfiles (optional but good to check)
+If you installed JaKooLit’s dots, also check:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/hyprland.conf
+Or:
+
+bash
+Copier
+Modifier
+nano ~/.config/hypr/UserConfigs/DefaultApps.conf
+Look for:
+
+ini
+Copier
+Modifier
+terminal = kitty
+And replace with:
+
+ini
+Copier
+Modifier
+terminal = foot
+✅ Then Reboot or Restart Hyprland
+bash
+Copier
+Modifier
+reboot
+Now SUPER + Enter will launch foot instead of kitty, and you won’t hit the Python 3 conflict anymore.
+
+Want me to generate a clean UserSettings.conf optimized for foot + NVIDIA + waybar + w
+
+> here is the link with gpt
+https://chatgpt.com/share/67ff5f18-058c-8009-bff4-43a7782b476f
